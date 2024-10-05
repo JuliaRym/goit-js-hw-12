@@ -79,6 +79,14 @@ function useLightbox() {
   lightbox.refresh();
 }
 
+function showLoadMore() {
+  loadMore.style.display = 'block';
+}
+
+function hideLoadMore() {
+  loadMore.style.display = 'none';
+}
+
 async function fetchImages(queryInput, page) {
   try {
     showLoader();
@@ -101,9 +109,9 @@ async function fetchImages(queryInput, page) {
     useLightbox();
 
     if (page * PER_PAGE < totalHits) {
-      loadMore.style.display = 'block';
+      showLoadMore();
     } else {
-      loadMore.style.display = 'none';
+      hideLoadMore();
       iziToast.info({
         message: "We're sorry, but you've reached the end of search results.",
       });
@@ -124,6 +132,7 @@ form.addEventListener('submit', event => {
   currentQuery = queryInput;
   currentPage = 1;
   gallery.innerHTML = '';
+  hideLoadMore();
 
   showLoader();
 
@@ -139,9 +148,35 @@ function showLoadingSpinnerMore() {
 function hideLoadingSpinnerMore() {
   loadingSpinnerMore.style.display = 'none';
 }
-loadMore.addEventListener('click', () => {
+// loadMore.addEventListener('click', () => {
+//   hideLoadMore();
+//   currentPage += 1;
+//   showLoadingSpinnerMore();
+//   fetchImages(currentQuery, currentPage).then(() => {
+//     smoothScroll();
+//   });
+// });
+
+loadMore.addEventListener('click', async () => {
+  hideLoadMore();
   currentPage += 1;
   showLoadingSpinnerMore();
-  fetchImages(currentQuery, currentPage);
-  //   hideLoadingSpinnerMore();
+
+  try {
+    await fetchImages(currentQuery, currentPage);
+    smoothScroll();
+  } catch (error) {
+    console.log(error);
+  }
 });
+
+function smoothScroll() {
+  const galleryItem = document.querySelector('.gallery-item');
+  if (galleryItem) {
+    const itemHeight = galleryItem.getBoundingClientRect().height;
+    window.scrollBy({
+      top: itemHeight * 2,
+      behavior: 'smooth',
+    });
+  }
+}
