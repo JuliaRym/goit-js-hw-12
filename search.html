@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Gallery</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-normalize@2.0.0/modern-normalize.min.css"
+    />
+    <script type="module" crossorigin src="/goit-js-hw-12/search.js"></script>
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-12/assets/vendor-Dp7Ig4E2.js">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/vendor-CWKLx11g.css">
+    <link rel="stylesheet" crossorigin href="/goit-js-hw-12/assets/search-BNJeD7wz.css">
+  </head>
+  <body>
+    <form class="search-form">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search images..."
+        required
+      />
+      <button type="submit">Search</button>
+    </form>
+    <div class="loading-spinner">Loading images, please wait...</div>
+    <div class="gallery"></div>
+    <div class="loading-spinner-more">Loading images, please wait...</div>
+    <div class="container-load-more">
+      <button class="load-more" style="display: none">Load more</button>
+    </div>
+  </body>
+</html>
